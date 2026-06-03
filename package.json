@@ -1,0 +1,14 @@
+{
+  "name": "world-cup-calendar-2026",
+  "version": "1.0.0",
+  "description": "Dynamic World Cup 2026 Calendar Subscription with live simulator & knockout progression",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

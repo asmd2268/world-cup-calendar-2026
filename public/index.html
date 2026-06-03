@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIFA World Cup 2026 Calendar Subscriptions & Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Link Copied! / تم نسخ الرابط!</div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo-section">
+        <span class="logo-icon">🏆</span>
+        <div class="logo-text">
+          <h1 id="nav-title">World Cup 2026 Calendar</h1>
+          <p id="nav-subtitle">Live Updates & Dynamic Mobile Calendar</p>
+        </div>
+      </div>
+      <div class="controls-section">
+        <button id="lang-toggle-btn" class="btn" onclick="toggleUILanguage()">
+          🌐 العربية
+        </button>
+        <button id="reset-btn" class="btn btn-danger" onclick="resetTournament()">
+          🔄 Reset Tournament
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Subscription Panel -->
+    <div class="hero-grid">
+      <!-- Calendar Configuration -->
+      <div class="panel">
+        <h3 class="panel-title">
+          <span>📅</span> <span id="sub-title">Calendar Setup & Subscription</span>
+        </h3>
+        <p id="sub-description" style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
+          Subscribe to the World Cup 2026 live schedule on your mobile device. Choose your language preference below, copy the link, and add it to your calendar. It will automatically update with results, kickoff alerts, and knockout teams!
+        </p>
+
+        <div class="config-group">
+          <label class="config-label" id="lbl-cal-lang">Calendar Language Preference</label>
+          <div class="radio-group">
+            <div class="radio-card active" onclick="setCalendarLanguage('both', this)">
+              <span class="radio-card-title">🇺🇸 | 🇸🇦 Bilingual</span>
+              <span class="radio-card-desc">English & العربية</span>
+            </div>
+            <div class="radio-card" onclick="setCalendarLanguage('en', this)">
+              <span class="radio-card-title">🇺🇸 English Only</span>
+              <span class="radio-card-desc">For English Calendars</span>
+            </div>
+            <div class="radio-card" onclick="setCalendarLanguage('ar', this)">
+              <span class="radio-card-title">🇸🇦 بالعربية فقط</span>
+              <span class="radio-card-desc">للتقويم العربي بالكامل</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="url-box">
+          <div id="sub-url-display" class="url-text">webcal://localhost:3000/api/worldcup2026.ics?lang=both</div>
+          <button class="copy-btn" onclick="copySubscriptionUrl()" title="Copy Link">📋</button>
+        </div>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a id="btn-apple-sub" href="webcal://localhost:3000/api/worldcup2026.ics?lang=both" class="btn btn-primary">
+            🍏 Subscribe on Apple Calendar
+          </a>
+          <button onclick="openGoogleCalendarGuide()" class="btn">
+            🤖 Add to Google Calendar
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick How-To Instructions -->
+      <div class="panel">
+        <h3 class="panel-title">
+          <span>💡</span> <span id="guide-title">How It Works</span>
+        </h3>
+        <div class="calendar-helpers">
+          <div class="helper-card">
+            <div class="helper-icon">⏱️</div>
+            <div class="helper-info">
+              <h4 id="guide-sync-title">Dynamic Timezones</h4>
+              <p id="guide-sync-desc">The calendar utilizes UTC timestamps. Your iOS/Android device automatically converts these to your mobile's current local timezone.</p>
+            </div>
+          </div>
+          <div class="helper-card">
+            <div class="helper-icon">🔔</div>
+            <div class="helper-info">
+              <h4 id="guide-alert-title">Live Match Alerts</h4>
+              <p id="guide-alert-desc">Matches contain built-in notifications: Kickoff (0m), Halftime Score (45m), and Fulltime Final Score (1h45m). Scores sync dynamically!</p>
+            </div>
+          </div>
+          <div class="helper-card">
+            <div class="helper-icon">🌳</div>
+            <div class="helper-info">
+              <h4 id="guide-knockout-title">Automatic Knockouts</h4>
+              <p id="guide-knockout-desc">As group matches finish, qualified teams automatically populate and update the placeholder names in the Round of 16 and subsequent rounds.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs for Matches vs Bracket -->
+    <div class="tab-container">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('matches', this)" id="tab-matches-lbl">Match Center & Simulator</button>
+        <button class="tab-btn" onclick="switchTab('bracket', this)" id="tab-bracket-lbl">Knockout Bracket Tree</button>
+      </div>
+
+      <!-- Tab Content: Matches Schedule -->
+      <div id="matches-tab" class="tab-content active">
+        <!-- Sub-filters inside Match Center -->
+        <div style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button class="btn btn-primary sub-filter-btn" onclick="filterMatches('all', this)" id="filter-all">All Matches</button>
+          <button class="btn sub-filter-btn" onclick="filterMatches('group', this)" id="filter-group">Group Stage</button>
+          <button class="btn sub-filter-btn" onclick="filterMatches('knockout', this)" id="filter-knockouts">Knockout Stage</button>
+        </div>
+        <div id="matches-grid" class="match-grid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Tab Content: Bracket View -->
+      <div id="bracket-tab" class="tab-content">
+        <div class="bracket-container" id="bracket-tree">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Translation resources
+    const translations = {
+      en: {
+        navTitle: "World Cup 2026 Calendar",
+        navSubtitle: "Live Updates & Dynamic Mobile Calendar",
+        resetBtn: "🔄 Reset Tournament",
+        subTitle: "Calendar Setup & Subscription",
+        subDescription: "Subscribe to the World Cup 2026 live schedule on your mobile device. Choose your language preference below, copy the link, and add it to your calendar. It will automatically update with results, kickoff alerts, and knockout teams!",
+        lblCalLang: "Calendar Language Preference",
+        btnAppleSub: "🍏 Subscribe on Apple Calendar",
+        guideTitle: "How It Works",
+        guideSyncTitle: "Dynamic Timezones",
+        guideSyncDesc: "The calendar utilizes UTC timestamps. Your iOS/Android device automatically converts these to your mobile's current local timezone.",
+        guideAlertTitle: "Live Match Alerts",
+        guideAlertDesc: "Matches contain built-in notifications: Kickoff (0m), Halftime Score (45m), and Fulltime Final Score (1h 45m). Scores sync dynamically!",
+        guideKnockoutTitle: "Automatic Knockouts",
+        guideKnockoutDesc: "As group matches finish, qualified teams automatically populate and update the placeholder names in the Round of 16 and subsequent rounds.",
+        tabMatchesLbl: "Match Center & Simulator",
+        tabBracketLbl: "Knockout Bracket Tree",
+        filterAll: "All Matches",
+        filterGroup: "Group Stage",
+        filterKnockouts: "Knockout Stage",
+        toastCopied: "Link Copied!",
+        toastReset: "Tournament Reset Successfully!",
+        stadiumLbl: "Stadium",
+        vs: "VS",
+        liveBadge: "LIVE",
+        halftimeBadge: "HT",
+        completedBadge: "FT",
+        scheduledBadge: "SCHEDULED",
+        simStart: "🚀 Kickoff",
+        simGoal1: "⚽ Goal Team 1",
+        simGoal2: "⚽ Goal Team 2",
+        simHt: "⏱️ Halftime",
+        simFt: "🏁 Full Time",
+        shootoutPrompt: "The game is tied! Choose shootout winner:",
+        alertMatchStarted: "Match started!",
+        alertGoalScored: "Goal scored!",
+        alertHt: "Halftime reached!",
+        alertFt: "Match completed! Bracket updated.",
+        googleCalGuide: "To subscribe on Google Calendar:\n1. Open Google Calendar on a desktop web browser.\n2. In the left panel, click '+' next to 'Other calendars' and select 'From URL'.\n3. Paste the subscription URL and click 'Add calendar'.\n4. Your mobile Google Calendar app will sync the schedule automatically!",
+        roundNames: {
+          r16: "Round of 16",
+          qf: "Quarterfinals",
+          sf: "Semifinals",
+          third: "3rd Place Match",
+          final: "Final Match"
+        }
+      },
+      ar: {
+        navTitle: "تقويم كأس العالم ٢٠٢٦",
+        navSubtitle: "تحديثات مباشرة وتقويم جوال تفاعلي",
+        resetBtn: "🔄 إعادة ضبط البطولة",
+        subTitle: "إعداد التقويم والاشتراك",
+        subDescription: "اشترك في جدول مباريات كأس العالم 2026 مباشرة على جهازك المحمول. اختر اللغة المفضلة للتقويم، انسخ الرابط، وأضفه إلى تقويمك. سيتم تحديثه تلقائيًا بالنتائج وتنبيهات المباريات وأسماء المنتخبات المتأهلة!",
+        lblCalLang: "لغة التقويم المفضلة",
+        btnAppleSub: "🍏 اشتراك عبر تقويم آبل",
+        guideTitle: "كيف يعمل التقويم",
+        guideSyncTitle: "توقيت محلي مرن",
+        guideSyncDesc: "يستخدم التقويم التوقيت العالمي الموحد (UTC)، ويقوم تطبيق التقويم في جوالك تلقائيًا بتحويل الأوقات لتناسب توقيتك المحلي الحالي.",
+        guideAlertTitle: "تنبيهات المباريات الحية",
+        guideAlertDesc: "تتضمن المباريات تنبيهات مدمجة: عند البداية (0 دقيقة)، نتيجة الشوط الأول (45 دقيقة)، والنتيجة النهائية (1 ساعة 45 دقيقة) وتتحدث في التقويم.",
+        guideKnockoutTitle: "تحديثات دور خروج المغلوب",
+        guideKnockoutDesc: "بمجرد انتهاء مباريات دور المجموعات، تنتقل الفرق الفائزة تلقائيًا وتحدث أسماء المجموعات الافتراضية في دور الـ 16 والأدوار التالية.",
+        tabMatchesLbl: "جدول المباريات والـمحاكاة",
+        tabBracketLbl: "شجرة الأدوار الإقصائية",
+        filterAll: "كل المباريات",
+        filterGroup: "دور المجموعات",
+        filterKnockouts: "أدوار خروج المغلوب",
+        toastCopied: "تم نسخ الرابط بنجاح!",
+        toastReset: "تمت إعادة ضبط البطولة بنجاح!",
+        stadiumLbl: "الملعب",
+        vs: "ضد",
+        liveBadge: "مباشر",
+        halftimeBadge: "شوط أول",
+        completedBadge: "نهائية",
+        scheduledBadge: "مجدولة",
+        simStart: "🚀 انطلاق",
+        simGoal1: "⚽ هدف للفريق الأول",
+        simGoal2: "⚽ هدف للفريق الثاني",
+        simHt: "⏱️ نهاية الشوط",
+        simFt: "🏁 نهاية المباراة",
+        shootoutPrompt: "المباراة متعادلة! اختر الفائز بركلات الترجيح:",
+        alertMatchStarted: "بدأت المباراة!",
+        alertGoalScored: "تم تسجيل هدف!",
+        alertHt: "انتهى الشوط الأول!",
+        alertFt: "انتهت المباراة! تم تحديث Bracket.",
+        googleCalGuide: "للاشتراك عبر تقويم Google:\n1. افتح تقويم Google على متصفح الكمبيوتر.\n2. في اللوحة الجانبية اليسرى، انقر على '+' بجوار 'التقاويم الأخرى' واختر 'من عنوان URL'.\n3. ألصق رابط الاشتراك المنسوخ وانقر على 'إضافة تقويم'.\n4. سيقوم تطبيق تقويم Google على هاتفك بمزامنة الجدول تلقائيًا!",
+        roundNames: {
+          r16: "دور الـ 16",
+          qf: "ربع النهائي",
+          sf: "نصف النهائي",
+          third: "المركز الثالث",
+          final: "المباراة النهائية"
+        }
+      }
+    };
+
+    let currentLang = 'ar'; // Default interface language
+    let calLang = 'both'; // Default calendar feed language
+    let matchesData = [];
+    let activeFilter = 'all';
+
+    // List of players per team to make simulation look realistic
+    const teamPlayers = {
+      MEX: [
+        { en: "Santiago Giménez", ar: "سانتياغو خيمينيز" },
+        { en: "Edson Álvarez", ar: "إديسون ألفاريز" },
+        { en: "Luis Chávez", ar: "لويس شافيز" }
+      ],
+      CAN: [
+        { en: "Jonathan David", ar: "جوناتان ديفيد" },
+        { en: "Alphonso Davies", ar: "ألفونسو ديفيز" },
+        { en: "Cyle Larin", ar: "سايل لارين" }
+      ],
+      USA: [
+        { en: "Christian Pulisic", ar: "كريستيان بوليسيتش" },
+        { en: "Folarin Balogun", ar: "فولارين بالوغون" },
+        { en: "Timothy Weah", ar: "تيموثي وياه" }
+      ],
+      MAR: [
+        { en: "Youssef En-Nesyri", ar: "يوسف النصيري" },
+        { en: "Hakim Ziyech", ar: "حكيم زياش" },
+        { en: "Sofiane Boufal", ar: "سفيان بوفال" }
+      ],
+      KSA: [
+        { en: "Salem Al-Dawsari", ar: "سالم الدوسري" },
+        { en: "Firas Al-Buraikan", ar: "فراس البريكان" },
+        { en: "Saleh Al-Shehri", ar: "صالح الشهري" }
+      ],
+      ARG: [
+        { en: "Lionel Messi", ar: "ليونيل ميسي" },
+        { en: "Lautaro Martínez", ar: "لاوتارو مارتينيز" },
+        { en: "Julián Álvarez", ar: "خوليان ألفاريز" }
+      ],
+      FRA: [
+        { en: "Kylian Mbappé", ar: "كيليان مبابي" },
+        { en: "Antoine Griezmann", ar: "أنطوان غريزمان" },
+        { en: "Olivier Giroud", ar: "أوليفييه جيرو" }
+      ],
+      BRA: [
+        { en: "Vinícius Júnior", ar: "فينيسيوس جونيور" },
+        { en: "Rodrygo", ar: "رودريغو" },
+        { en: "Richarlison", ar: "ريتشارليسون" }
+      ],
+      ESP: [
+        { en: "Alvaro Morata", ar: "ألفارو موراتا" },
+        { en: "Dani Olmo", ar: "داني أولمو" },
+        { en: "Nico Williams", ar: "نيكو ويليامز" }
+      ],
+      GER: [
+        { en: "Kai Havertz", ar: "كاي هافيرتز" },
+        { en: "Florian Wirtz", ar: "فلوريان فيرتز" },
+        { en: "Jamal Musiala", ar: "جمال موسيالا" }
+      ],
+      ENG: [
+        { en: "Harry Kane", ar: "هاري كين" },
+        { en: "Bukayo Saka", ar: "بوكايو ساكا" },
+        { en: "Jude Bellingham", ar: "جود بيلينجهام" }
+      ],
+      ITA: [
+        { en: "Federico Chiesa", ar: "فيديريكو كييزا" },
+        { en: "Gianluca Scamacca", ar: "جيانلوكا سكاماكا" },
+        { en: "Mateo Retegui", ar: "ماتيو ريتيغي" }
+      ]
+    };
+
+    // Toggle the interface UI Language
+    function toggleUILanguage() {
+      currentLang = currentLang === 'en' ? 'ar' : 'en';
+      document.body.classList.toggle('rtl', currentLang === 'ar');
+      
+      const t = translations[currentLang];
+      
+      // Update UI elements
+      document.getElementById('nav-title').textContent = t.navTitle;
+      document.getElementById('nav-subtitle').textContent = t.navSubtitle;
+      document.getElementById('reset-btn').textContent = t.resetBtn;
+      document.getElementById('sub-title').textContent = t.subTitle;
+      document.getElementById('sub-description').textContent = t.subDescription;
+      document.getElementById('lbl-cal-lang').textContent = t.lblCalLang;
+      document.getElementById('btn-apple-sub').textContent = t.btnAppleSub;
+      document.getElementById('guide-title').textContent = t.guideTitle;
+      document.getElementById('guide-sync-title').textContent = t.guideSyncTitle;
+      document.getElementById('guide-sync-desc').textContent = t.guideSyncDesc;
+      document.getElementById('guide-alert-title').textContent = t.guideAlertTitle;
+      document.getElementById('guide-alert-desc').textContent = t.guideAlertDesc;
+      document.getElementById('guide-knockout-title').textContent = t.guideKnockoutTitle;
+      document.getElementById('guide-knockout-desc').textContent = t.guideKnockoutDesc;
+      document.getElementById('tab-matches-lbl').textContent = t.tabMatchesLbl;
+      document.getElementById('tab-bracket-lbl').textContent = t.tabBracketLbl;
+      document.getElementById('filter-all').textContent = t.filterAll;
+      document.getElementById('filter-group').textContent = t.filterGroup;
+      document.getElementById('filter-knockouts').textContent = t.filterKnockouts;
+      document.getElementById('lang-toggle-btn').textContent = currentLang === 'en' ? '🌐 العربية' : '🌐 English';
+
+      // Update Active filters state
+      updateActiveFilterUI();
+      
+      // Re-render components
+      renderMatches();
+      renderBracket();
+    }
+
+    function updateActiveFilterUI() {
+      const filters = ['all', 'group', 'knockout'];
+      filters.forEach(f => {
+        const btn = document.getElementById('filter-' + (f === 'knockout' ? 'knockouts' : f));
+        if (f === activeFilter) {
+          btn.classList.add('btn-primary');
+        } else {
+          btn.classList.remove('btn-primary');
+        }
+      });
+    }
+
+    // Set Calendar Feed URL options
+    function setCalendarLanguage(lang, element) {
+      calLang = lang;
+      
+      // Update radio card styling
+      const cards = element.parentNode.querySelectorAll('.radio-card');
+      cards.forEach(c => c.classList.remove('active'));
+      element.classList.add('active');
+
+      // Update URL and links
+      const host = window.location.host;
+      const protocol = window.location.protocol === 'https:' ? 'webcals:' : 'webcal:';
+      const webcalUrl = `${protocol}//${host}/api/worldcup2026.ics?lang=${lang}`;
+      
+      document.getElementById('sub-url-display').textContent = webcalUrl;
+      document.getElementById('btn-apple-sub').setAttribute('href', webcalUrl);
+    }
+
+    // Copy calendar subscription URL
+    function copySubscriptionUrl() {
+      const urlText = document.getElementById('sub-url-display').textContent;
+      navigator.clipboard.writeText(urlText).then(() => {
+        showToast(translations[currentLang].toastCopied);
+      });
+    }
+
+    function openGoogleCalendarGuide() {
+      const gcalUrl = `${window.location.protocol}//${window.location.host}/api/worldcup2026.ics?lang=${calLang}`;
+      navigator.clipboard.writeText(gcalUrl).then(() => {
+        alert(translations[currentLang].googleCalGuide + `\n\n(URL has been copied to your clipboard: ${gcalUrl})`);
+      });
+    }
+
+    // Show Toast
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Switch between Matches and Bracket tab
+    function switchTab(tabName, btn) {
+      // Manage buttons
+      const tabs = btn.parentNode.querySelectorAll('.tab-btn');
+      tabs.forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Manage contents
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById(tabName + '-tab').classList.add('active');
+    }
+
+    // Filter Matches in list
+    function filterMatches(filter, btn) {
+      activeFilter = filter;
+      const filters = btn.parentNode.querySelectorAll('.sub-filter-btn');
+      filters.forEach(f => f.classList.remove('btn-primary'));
+      btn.classList.add('btn-primary');
+      renderMatches();
+    }
+
+    // Format ISO Date to user local display string
+    function formatMatchTime(isoString) {
+      const date = new Date(isoString);
+      
+      // Formatting options
+      const options = {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      };
+
+      const locale = currentLang === 'ar' ? 'ar-SA' : 'en-US';
+      return date.toLocaleDateString(locale, options);
+    }
+
+    // Load Matches from DB
+    async function loadMatches() {
+      try {
+        const response = await fetch('/api/matches');
+        const data = await response.json();
+        matchesData = data.matches;
+        renderMatches();
+        renderBracket();
+      } catch (error) {
+        console.error('Error loading matches:', error);
+      }
+    }
+
+    // Render Matches Grid
+    function renderMatches() {
+      const grid = document.getElementById('matches-grid');
+      grid.innerHTML = '';
+
+      let filtered = matchesData;
+      if (activeFilter === 'group') {
+        filtered = matchesData.filter(m => m.stage === 'group');
+      } else if (activeFilter === 'knockout') {
+        filtered = matchesData.filter(m => m.stage !== 'group');
+      }
+
+      const t = translations[currentLang];
+
+      filtered.forEach(match => {
+        const isPlaceholder1 = !match.team1.code;
+        const isPlaceholder2 = !match.team2.code;
+
+        const name1 = currentLang === 'ar' 
+          ? (isPlaceholder1 ? match.team1.placeholder_ar : match.team1.name_ar) 
+          : (isPlaceholder1 ? match.team1.placeholder_en : match.team1.name_en);
+
+        const name2 = currentLang === 'ar' 
+          ? (isPlaceholder2 ? match.team2.placeholder_ar : match.team2.name_ar) 
+          : (isPlaceholder2 ? match.team2.placeholder_en : match.team2.name_en);
+
+        const flag1 = isPlaceholder1 ? '🏆' : match.team1.flag;
+        const flag2 = isPlaceholder2 ? '🏆' : match.team2.flag;
+
+        const stadiumName = currentLang === 'ar' ? match.stadium.name_ar : match.stadium.name_en;
+        const cityName = currentLang === 'ar' ? match.stadium.city_ar : match.stadium.city_en;
+
+        const stageText = currentLang === 'ar' 
+          ? (match.stage === 'group' ? `المجموعة ${match.group}` : t.roundNames[match.stage])
+          : (match.stage === 'group' ? `Group ${match.group}` : t.roundNames[match.stage]);
+
+        // Status Badge class and text
+        let statusClass = match.status;
+        let statusText = t.scheduledBadge;
+        if (match.status === 'live') statusText = t.liveBadge;
+        else if (match.status === 'halftime') statusText = t.halftimeBadge;
+        else if (match.status === 'completed') statusText = t.completedBadge;
+
+        // Scores
+        const score1 = match.status !== 'scheduled' ? match.score1 : '-';
+        const score2 = match.status !== 'scheduled' ? match.score2 : '-';
+        const scoreClass = match.status === 'live' || match.status === 'halftime' ? 'score-nums live-score' : 'score-nums';
+
+        // Check if playable/simulatable (real teams are qualified)
+        const canSimulate = !isPlaceholder1 && !isPlaceholder2;
+
+        let cardHtml = `
+          <div class="match-card">
+            <div class="match-header">
+              <span class="match-stage">${stageText}</span>
+              <span class="match-status-badge ${statusClass}">
+                ${match.status === 'live' ? '<span class="live-dot" style="width:6px;height:6px;background:red;border-radius:50%;display:inline-block;animation:pulse 1s infinite;"></span>' : ''}
+                ${statusText}
+              </span>
+            </div>
+            
+            <div class="match-body">
+              <div class="teams-display">
+                <div class="team-row">
+                  <span class="team-flag">${flag1}</span>
+                  <span class="${isPlaceholder1 ? 'team-placeholder' : 'team-name'}">${name1}</span>
+                </div>
+                
+                <div class="score-display">
+                  <span class="${scoreClass}">${score1} : ${score2}</span>
+                  <span class="score-vs">${t.vs}</span>
+                </div>
+                
+                <div class="team-row">
+                  <span class="team-flag">${flag2}</span>
+                  <span class="${isPlaceholder2 ? 'team-placeholder' : 'team-name'}">${name2}</span>
+                </div>
+              </div>
+
+              <div class="match-venue">
+                📍 ${stadiumName} (${cityName}) | 🕒 ${formatMatchTime(match.date)}
+              </div>
+        `;
+
+        // Render goals log inside body if exists
+        if (match.goals && match.goals.length > 0) {
+          cardHtml += `<div class="goal-logs">`;
+          match.goals.forEach(goal => {
+            const scorer = currentLang === 'ar' ? (goal.player_ar || goal.player) : goal.player;
+            const isT1 = goal.team_code === match.team1.code;
+            cardHtml += `
+              <div class="goal-log-item">
+                <span>${isT1 ? '⚽ ' + scorer + ' (' + goal.minute + '\')' : ''}</span>
+                <span>${!isT1 ? scorer + ' (' + goal.minute + '\') ⚽' : ''}</span>
+              </div>
+            `;
+          });
+          cardHtml += `</div>`;
+        }
+
+        cardHtml += `</div>`; // End match body
+
+        // Render simulator actions for admins/users if they have real teams
+        if (canSimulate) {
+          cardHtml += `
+            <div class="simulator-actions">
+          `;
+
+          if (match.status === 'scheduled') {
+            cardHtml += `
+              <button class="sim-btn start" onclick="updateMatchStatus(${match.id}, 'live')">${t.simStart}</button>
+            `;
+          } else if (match.status === 'live') {
+            cardHtml += `
+              <button class="sim-btn goal" onclick="simulateGoal(${match.id}, 'team1')">⚽ ${name1}</button>
+              <button class="sim-btn ht" onclick="updateMatchStatus(${match.id}, 'halftime')">${t.simHt}</button>
+              <button class="sim-btn goal" onclick="simulateGoal(${match.id}, 'team2')">⚽ ${name2}</button>
+            `;
+          } else if (match.status === 'halftime') {
+            cardHtml += `
+              <button class="sim-btn start" onclick="updateMatchStatus(${match.id}, 'live')">${t.simStart}</button>
+              <button class="sim-btn ft" onclick="completeMatch(${match.id})">${t.simFt}</button>
+            `;
+          } else if (match.status === 'completed') {
+            // Re-simulate
+            cardHtml += `
+              <span style="font-size: 0.75rem; color: var(--success-color); font-weight: 700; width:100%; text-align:center;">✓ Match Concluded / انتهت المباراة</span>
+            `;
+          }
+
+          cardHtml += `</div>`;
+        } else {
+          cardHtml += `
+            <div class="simulator-actions" style="justify-content:center;">
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-style:italic;">Awaiting Qualified Teams / بانتظار تأهل المنتخبات</span>
+            </div>
+          `;
+        }
+
+        cardHtml += `</div>`; // End card
+        grid.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    }
+
+    // Render Bracket Tree
+    function renderBracket() {
+      const container = document.getElementById('bracket-tree');
+      container.innerHTML = '';
+
+      const rounds = [
+        { key: 'r16', ids: [81, 82, 83, 84, 85, 86, 87, 88] },
+        { key: 'qf', ids: [89, 90, 91, 92] },
+        { key: 'sf', ids: [93, 94] },
+        { key: 'final', ids: [104] }
+      ];
+
+      const t = translations[currentLang];
+
+      rounds.forEach(round => {
+        let roundHtml = `<div class="bracket-round">`;
+        roundHtml += `<div class="bracket-round-title">${t.roundNames[round.key]}</div>`;
+
+        round.ids.forEach(id => {
+          const match = matchesData.find(m => m.id === id);
+          if (!match) return;
+
+          const isPlaceholder1 = !match.team1.code;
+          const isPlaceholder2 = !match.team2.code;
+
+          const name1 = currentLang === 'ar' 
+            ? (isPlaceholder1 ? match.team1.placeholder_ar : match.team1.name_ar) 
+            : (isPlaceholder1 ? match.team1.placeholder_en : match.team1.name_en);
+
+          const name2 = currentLang === 'ar' 
+            ? (isPlaceholder2 ? match.team2.placeholder_ar : match.team2.name_ar) 
+            : (isPlaceholder2 ? match.team2.placeholder_en : match.team2.name_en);
+
+          const flag1 = isPlaceholder1 ? '🏆' : match.team1.flag;
+          const flag2 = isPlaceholder2 ? '🏆' : match.team2.flag;
+
+          const isWinner1 = match.status === 'completed' && match.score1 > match.score2;
+          const isWinner2 = match.status === 'completed' && match.score2 > match.score1;
+
+          roundHtml += `
+            <div class="bracket-match">
+              <div style="font-size:0.65rem; color:var(--text-muted); margin-bottom:0.25rem;">Match #${id}</div>
+              <div class="bracket-team ${isWinner1 ? 'winner' : ''}">
+                <span class="bracket-team-name">${flag1} ${name1}</span>
+                <span class="bracket-team-score">${match.status !== 'scheduled' ? match.score1 : '-'}</span>
+              </div>
+              <div class="bracket-team ${isWinner2 ? 'winner' : ''}">
+                <span class="bracket-team-name">${flag2} ${name2}</span>
+                <span class="bracket-team-score">${match.status !== 'scheduled' ? match.score2 : '-'}</span>
+              </div>
+            </div>
+          `;
+        });
+
+        roundHtml += `</div>`;
+        container.insertAdjacentHTML('beforeend', roundHtml);
+      });
+    }
+
+    // Call API to update match status
+    async function updateMatchStatus(matchId, status) {
+      try {
+        const response = await fetch(`/api/matches/${matchId}/update`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status })
+        });
+        const result = await response.json();
+        if (result.success) {
+          const alertMsg = status === 'live' 
+            ? translations[currentLang].alertMatchStarted 
+            : translations[currentLang].alertHt;
+          showToast(alertMsg);
+          loadMatches();
+        }
+      } catch (error) {
+        console.error('Error updating status:', error);
+      }
+    }
+
+    // Simulate Goal scorer
+    async function simulateGoal(matchId, teamSlot) {
+      const match = matchesData.find(m => m.id === matchId);
+      if (!match) return;
+
+      const team = match[teamSlot];
+      const players = teamPlayers[team.code] || [{ en: "Unknown Scorer", ar: "هداف غير معروف" }];
+      const randPlayer = players[Math.floor(Math.random() * players.length)];
+      
+      const newScore1 = teamSlot === 'team1' ? match.score1 + 1 : match.score1;
+      const newScore2 = teamSlot === 'team2' ? match.score2 + 1 : match.score2;
+
+      const goalMinute = match.status === 'halftime' ? 45 : Math.floor(Math.random() * 44) + (match.status === 'live' && match.goals.length > 0 ? 46 : 1);
+
+      const newGoal = {
+        player: randPlayer.en,
+        player_ar: randPlayer.ar,
+        minute: goalMinute,
+        team_code: team.code
+      };
+
+      const updatedGoals = [...match.goals, newGoal];
+
+      try {
+        const response = await fetch(`/api/matches/${matchId}/update`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            score1: newScore1,
+            score2: newScore2,
+            goals: updatedGoals
+          })
+        });
+        const result = await response.json();
+        if (result.success) {
+          showToast(translations[currentLang].alertGoalScored);
+          loadMatches();
+        }
+      } catch (error) {
+        console.error('Error simulating goal:', error);
+      }
+    }
+
+    // Call API to complete the match (handles knockout shootout ties)
+    async function completeMatch(matchId) {
+      const match = matchesData.find(m => m.id === matchId);
+      if (!match) return;
+
+      let shootoutWinner = null;
+      // If knockout stage and tied, ask who won the shootout
+      if (match.stage !== 'group' && match.score1 === match.score2) {
+        const t = translations[currentLang];
+        const isTeam1 = confirm(`${t.shootoutPrompt}\n\n1. OK / نعم for: ${currentLang === 'ar' ? match.team1.name_ar : match.team1.name_en}\n2. Cancel / إلغاء for: ${currentLang === 'ar' ? match.team2.name_ar : match.team2.name_en}`);
+        shootoutWinner = isTeam1 ? 'team1' : 'team2';
+      }
+
+      try {
+        const response = await fetch(`/api/matches/${matchId}/update`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: 'completed',
+            shootoutWinner
+          })
+        });
+        const result = await response.json();
+        if (result.success) {
+          // If we concluded a Group Stage match, check if we want to manually qualify groups to Round of 16
+          // To keep it simple, once group matches are completed, we can check if all group matches are done, 
+          // and auto-populate the Round of 16 slots with winner/runners-up!
+          // Let's check if all group stage matches (IDs 1-6) are completed.
+          showToast(translations[currentLang].alertFt);
+          
+          await checkAndAutoQualifyGroupWinners();
+          loadMatches();
+        }
+      } catch (error) {
+        console.error('Error completing match:', error);
+      }
+    }
+
+    // Auto-populates Round of 16 placeholders once respective group stage matches are done
+    async function checkAndAutoQualifyGroupWinners() {
+      // Group A (Match 1): MEX vs CAN. Let's say winner of match 1 is Winner Group A, loser is Runner-up Group B (or simplified simulation rule)
+      const m1 = matchesData.find(m => m.id === 1);
+      const m2 = matchesData.find(m => m.id === 2);
+      const m3 = matchesData.find(m => m.id === 3);
+      const m4 = matchesData.find(m => m.id === 4);
+      const m5 = matchesData.find(m => m.id === 5);
+      const m6 = matchesData.find(m => m.id === 6);
+
+      // Simple rule for simulation:
+      // Match 1 (Group A): Winner goes to R16 Match 81 (team1), Loser goes to R16 Match 87 (team2)
+      if (m1 && m1.status === 'completed') {
+        const w = m1.score1 > m1.score2 ? m1.team1 : m1.team2;
+        const l = m1.score1 > m1.score2 ? m1.team2 : m1.team1;
+        await qualifyTeam(81, 'team1', w);
+        await qualifyTeam(87, 'team2', l);
+      }
+      
+      // Match 2 (Group B): Winner goes to R16 Match 81 (team2), Loser goes to R16 Match 87 (team1)
+      if (m2 && m2.status === 'completed') {
+        const w = m2.score1 > m2.score2 ? m2.team1 : m2.team2;
+        const l = m2.score1 > m2.score2 ? m2.team2 : m2.team1;
+        await qualifyTeam(81, 'team2', w);
+        await qualifyTeam(87, 'team1', l);
+      }
+
+      // Match 3 (Group C): Winner goes to R16 Match 82 (team1), Loser goes to R16 Match 88 (team2)
+      if (m3 && m3.status === 'completed') {
+        const w = m3.score1 > m3.score2 ? m3.team1 : m3.team2;
+        const l = m3.score1 > m3.score2 ? m3.team2 : m3.team1;
+        await qualifyTeam(82, 'team1', w);
+        await qualifyTeam(88, 'team2', l);
+      }
+
+      // Match 4 (Group D): Winner goes to R16 Match 82 (team2), Loser to R16 Match 88 (team1)
+      if (m4 && m4.status === 'completed') {
+        const w = m4.score1 > m4.score2 ? m4.team1 : m4.team2;
+        const l = m4.score1 > m4.score2 ? m4.team2 : m4.team1;
+        await qualifyTeam(82, 'team2', w);
+        await qualifyTeam(88, 'team1', l);
+      }
+
+      // Match 5 (Group E): Winner goes to R16 Match 83 (team1), Loser to R16 Match 84 (team2)
+      if (m5 && m5.status === 'completed') {
+        const w = m5.score1 > m5.score2 ? m5.team1 : m5.team2;
+        const l = m5.score1 > m5.score2 ? m5.team2 : m5.team1;
+        await qualifyTeam(83, 'team1', w);
+        await qualifyTeam(84, 'team2', l);
+      }
+
+      // Match 6 (Group F): Winner goes to R16 Match 83 (team2), Loser to R16 Match 84 (team1)
+      if (m6 && m6.status === 'completed') {
+        const w = m6.score1 > m6.score2 ? m6.team1 : m6.team2;
+        const l = m6.score1 > m6.score2 ? m6.team2 : m6.team1;
+        await qualifyTeam(83, 'team2', w);
+        await qualifyTeam(84, 'team1', l);
+      }
+    }
+
+    // Assign team to a knockout slot API
+    async function qualifyTeam(matchId, slot, team) {
+      try {
+        await fetch(`/api/matches/${matchId}/qualify`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ slot, team })
+        });
+      } catch (error) {
+        console.error('Error qualifying team:', error);
+      }
+    }
+
+    // Reset Tournament API call
+    async function resetTournament() {
+      try {
+        const response = await fetch('/api/matches/reset', {
+          method: 'POST'
+        });
+        const result = await response.json();
+        if (result.success) {
+          showToast(translations[currentLang].toastReset);
+          loadMatches();
+        }
+      } catch (error) {
+        console.error('Error resetting tournament:', error);
+      }
+    }
+
+    // Set active sub-filters styling initially
+    updateActiveFilterUI();
+
+    // Initial Load
+    loadMatches();
+    
+    // Set dynamic url host on load
+    setCalendarLanguage('both', document.querySelector('.radio-card'));
+  </script>
+</body>
+</html>

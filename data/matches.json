@@ -1,0 +1,606 @@
+{
+  "matches": [
+    {
+      "id": 1,
+      "stage": "group",
+      "group": "A",
+      "team1": {
+        "name_en": "Mexico",
+        "name_ar": "المكسيك",
+        "code": "MEX",
+        "flag": "🇲🇽"
+      },
+      "team2": {
+        "name_en": "Canada",
+        "name_ar": "كندا",
+        "code": "CAN",
+        "flag": "🇨🇦"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-11T19:00:00Z",
+      "stadium": {
+        "name_en": "Estadio Azteca",
+        "name_ar": "ملعب أزتيكا",
+        "city_en": "Mexico City",
+        "city_ar": "مكسيكو سيتي",
+        "lat": 19.3029,
+        "lon": -99.1505
+      },
+      "goals": []
+    },
+    {
+      "id": 2,
+      "stage": "group",
+      "group": "B",
+      "team1": {
+        "name_en": "USA",
+        "name_ar": "الولايات المتحدة",
+        "code": "USA",
+        "flag": "🇺🇸"
+      },
+      "team2": {
+        "name_en": "Morocco",
+        "name_ar": "المغرب",
+        "code": "MAR",
+        "flag": "🇲🇦"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-12T20:00:00Z",
+      "stadium": {
+        "name_en": "SoFi Stadium",
+        "name_ar": "ملعب سوفي",
+        "city_en": "Los Angeles",
+        "city_ar": "لوس أنجلوس",
+        "lat": 33.9535,
+        "lon": -118.339
+      },
+      "goals": []
+    },
+    {
+      "id": 3,
+      "stage": "group",
+      "group": "C",
+      "team1": {
+        "name_en": "Saudi Arabia",
+        "name_ar": "السعودية",
+        "code": "KSA",
+        "flag": "🇸🇦"
+      },
+      "team2": {
+        "name_en": "Argentina",
+        "name_ar": "الأرجنتين",
+        "code": "ARG",
+        "flag": "🇦🇷"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-13T18:00:00Z",
+      "stadium": {
+        "name_en": "MetLife Stadium",
+        "name_ar": "ملعب ميتلايف",
+        "city_en": "New York/New Jersey",
+        "city_ar": "نيويورك/نيوجيرسي",
+        "lat": 40.8136,
+        "lon": -74.0744
+      },
+      "goals": []
+    },
+    {
+      "id": 4,
+      "stage": "group",
+      "group": "D",
+      "team1": {
+        "name_en": "France",
+        "name_ar": "فرنسا",
+        "code": "FRA",
+        "flag": "🇫🇷"
+      },
+      "team2": {
+        "name_en": "Brazil",
+        "name_ar": "البرازيل",
+        "code": "BRA",
+        "flag": "🇧🇷"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-14T17:00:00Z",
+      "stadium": {
+        "name_en": "Mercedes-Benz Stadium",
+        "name_ar": "ملعب مرسيدس بنز",
+        "city_en": "Atlanta",
+        "city_ar": "أتلانتا",
+        "lat": 33.7576,
+        "lon": -84.401
+      },
+      "goals": []
+    },
+    {
+      "id": 5,
+      "stage": "group",
+      "group": "E",
+      "team1": {
+        "name_en": "Spain",
+        "name_ar": "إسبانيا",
+        "code": "ESP",
+        "flag": "🇪🇸"
+      },
+      "team2": {
+        "name_en": "Germany",
+        "name_ar": "ألمانيا",
+        "code": "GER",
+        "flag": "🇩🇪"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-15T21:00:00Z",
+      "stadium": {
+        "name_en": "Hard Rock Stadium",
+        "name_ar": "ملعب هارد روك",
+        "city_en": "Miami",
+        "city_ar": "ميامي",
+        "lat": 25.958,
+        "lon": -80.2389
+      },
+      "goals": []
+    },
+    {
+      "id": 6,
+      "stage": "group",
+      "group": "F",
+      "team1": {
+        "name_en": "England",
+        "name_ar": "إنجلترا",
+        "code": "ENG",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"
+      },
+      "team2": {
+        "name_en": "Italy",
+        "name_ar": "إيطاليا",
+        "code": "ITA",
+        "flag": "🇮🇹"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-16T19:00:00Z",
+      "stadium": {
+        "name_en": "BC Place",
+        "name_ar": "بي سي بليس",
+        "city_en": "Vancouver",
+        "city_ar": "فانكوفر",
+        "lat": 49.2768,
+        "lon": -123.112
+      },
+      "goals": []
+    },
+    {
+      "id": 81,
+      "stage": "r16",
+      "team1": {
+        "placeholder_en": "Winner Group A",
+        "placeholder_ar": "متصدر المجموعة أ"
+      },
+      "team2": {
+        "placeholder_en": "Runner-up Group B",
+        "placeholder_ar": "وصيف المجموعة ب"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-28T18:00:00Z",
+      "stadium": {
+        "name_en": "MetLife Stadium",
+        "name_ar": "ملعب ميتلايف",
+        "city_en": "New York/New Jersey",
+        "city_ar": "نيويورك/نيوجيرسي",
+        "lat": 40.8136,
+        "lon": -74.0744
+      },
+      "goals": []
+    },
+    {
+      "id": 82,
+      "stage": "r16",
+      "team1": {
+        "placeholder_en": "Winner Group C",
+        "placeholder_ar": "متصدر المجموعة ج"
+      },
+      "team2": {
+        "placeholder_en": "Runner-up Group D",
+        "placeholder_ar": "وصيف المجموعة د"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-28T21:00:00Z",
+      "stadium": {
+        "name_en": "SoFi Stadium",
+        "name_ar": "ملعب سوفي",
+        "city_en": "Los Angeles",
+        "city_ar": "لوس أنجلوس",
+        "lat": 33.9535,
+        "lon": -118.339
+      },
+      "goals": []
+    },
+    {
+      "id": 83,
+      "stage": "r16",
+      "team1": {
+        "placeholder_en": "Winner Group E",
+        "placeholder_ar": "متصدر المجموعة هـ"
+      },
+      "team2": {
+        "placeholder_en": "Runner-up Group F",
+        "placeholder_ar": "وصيف المجموعة و"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-29T18:00:00Z",
+      "stadium": {
+        "name_en": "Mercedes-Benz Stadium",
+        "name_ar": "ملعب مرسيدس بنز",
+        "city_en": "Atlanta",
+        "city_ar": "أتلانتا",
+        "lat": 33.7576,
+        "lon": -84.401
+      },
+      "goals": []
+    },
+    {
+      "id": 84,
+      "stage": "r16",
+      "team1": {
+        "placeholder_en": "Winner Group G",
+        "placeholder_ar": "متصدر المجموعة ز"
+      },
+      "team2": {
+        "placeholder_en": "Runner-up Group H",
+        "placeholder_ar": "وصيف المجموعة ح"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-29T21:00:00Z",
+      "stadium": {
+        "name_en": "Hard Rock Stadium",
+        "name_ar": "ملعب هارد روك",
+        "city_en": "Miami",
+        "city_ar": "ميامي",
+        "lat": 25.958,
+        "lon": -80.2389
+      },
+      "goals": []
+    },
+    {
+      "id": 85,
+      "stage": "r16",
+      "team1": {
+        "placeholder_en": "Winner Group I",
+        "placeholder_ar": "متصدر المجموعة ط"
+      },
+      "team2": {
+        "placeholder_en": "Runner-up Group J",
+        "placeholder_ar": "وصيف المجموعة ي"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-30T18:00:00Z",
+      "stadium": {
+        "name_en": "AT&T Stadium",
+        "name_ar": "ملعب إيه تي آند تي",
+        "city_en": "Dallas",
+        "city_ar": "دالاس",
+        "lat": 32.7473,
+        "lon": -97.0928
+      },
+      "goals": []
+    },
+    {
+      "id": 86,
+      "stage": "r16",
+      "team1": {
+        "placeholder_en": "Winner Group K",
+        "placeholder_ar": "متصدر المجموعة ك"
+      },
+      "team2": {
+        "placeholder_en": "Runner-up Group L",
+        "placeholder_ar": "وصيف المجموعة ل"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-06-30T21:00:00Z",
+      "stadium": {
+        "name_en": "Estadio Akron",
+        "name_ar": "ملعب أكرون",
+        "city_en": "Guadalajara",
+        "city_ar": "غوادالاخارا",
+        "lat": 20.6811,
+        "lon": -103.4627
+      },
+      "goals": []
+    },
+    {
+      "id": 87,
+      "stage": "r16",
+      "team1": {
+        "placeholder_en": "Winner Group A2",
+        "placeholder_ar": "متصدر المجموعة أ2"
+      },
+      "team2": {
+        "placeholder_en": "Runner-up Group B2",
+        "placeholder_ar": "وصيف المجموعة ب2"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-01T18:00:00Z",
+      "stadium": {
+        "name_en": "BC Place",
+        "name_ar": "بي سي بليس",
+        "city_en": "Vancouver",
+        "city_ar": "فانكوفر",
+        "lat": 49.2768,
+        "lon": -123.112
+      },
+      "goals": []
+    },
+    {
+      "id": 88,
+      "stage": "r16",
+      "team1": {
+        "placeholder_en": "Winner Group C2",
+        "placeholder_ar": "متصدر المجموعة ج2"
+      },
+      "team2": {
+        "placeholder_en": "Runner-up Group D2",
+        "placeholder_ar": "وصيف المجموعة د2"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-01T21:00:00Z",
+      "stadium": {
+        "name_en": "Estadio Azteca",
+        "name_ar": "ملعب أزتيكا",
+        "city_en": "Mexico City",
+        "city_ar": "مكسيكو سيتي",
+        "lat": 19.3029,
+        "lon": -99.1505
+      },
+      "goals": []
+    },
+    {
+      "id": 89,
+      "stage": "qf",
+      "team1": {
+        "placeholder_en": "Winner Match 81",
+        "placeholder_ar": "فائز مباراة 81"
+      },
+      "team2": {
+        "placeholder_en": "Winner Match 82",
+        "placeholder_ar": "فائز مباراة 82"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-04T18:00:00Z",
+      "stadium": {
+        "name_en": "MetLife Stadium",
+        "name_ar": "ملعب ميتلايف",
+        "city_en": "New York/New Jersey",
+        "city_ar": "نيويورك/نيوجيرسي",
+        "lat": 40.8136,
+        "lon": -74.0744
+      },
+      "goals": []
+    },
+    {
+      "id": 90,
+      "stage": "qf",
+      "team1": {
+        "placeholder_en": "Winner Match 83",
+        "placeholder_ar": "فائز مباراة 83"
+      },
+      "team2": {
+        "placeholder_en": "Winner Match 84",
+        "placeholder_ar": "فائز مباراة 84"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-04T21:00:00Z",
+      "stadium": {
+        "name_en": "SoFi Stadium",
+        "name_ar": "ملعب سوفي",
+        "city_en": "Los Angeles",
+        "city_ar": "لوس أنجلوس",
+        "lat": 33.9535,
+        "lon": -118.339
+      },
+      "goals": []
+    },
+    {
+      "id": 91,
+      "stage": "qf",
+      "team1": {
+        "placeholder_en": "Winner Match 85",
+        "placeholder_ar": "فائز مباراة 85"
+      },
+      "team2": {
+        "placeholder_en": "Winner Match 86",
+        "placeholder_ar": "فائز مباراة 86"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-05T18:00:00Z",
+      "stadium": {
+        "name_en": "AT&T Stadium",
+        "name_ar": "ملعب إيه تي آند تي",
+        "city_en": "Dallas",
+        "city_ar": "دالاس",
+        "lat": 32.7473,
+        "lon": -97.0928
+      },
+      "goals": []
+    },
+    {
+      "id": 92,
+      "stage": "qf",
+      "team1": {
+        "placeholder_en": "Winner Match 87",
+        "placeholder_ar": "فائز مباراة 87"
+      },
+      "team2": {
+        "placeholder_en": "Winner Match 88",
+        "placeholder_ar": "فائز مباراة 88"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-05T21:00:00Z",
+      "stadium": {
+        "name_en": "Hard Rock Stadium",
+        "name_ar": "ملعب هارد روك",
+        "city_en": "Miami",
+        "city_ar": "ميامي",
+        "lat": 25.958,
+        "lon": -80.2389
+      },
+      "goals": []
+    },
+    {
+      "id": 93,
+      "stage": "sf",
+      "team1": {
+        "placeholder_en": "Winner Match 89",
+        "placeholder_ar": "فائز مباراة 89"
+      },
+      "team2": {
+        "placeholder_en": "Winner Match 90",
+        "placeholder_ar": "فائز مباراة 90"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-08T19:00:00Z",
+      "stadium": {
+        "name_en": "Mercedes-Benz Stadium",
+        "name_ar": "ملعب مرسيدس بنز",
+        "city_en": "Atlanta",
+        "city_ar": "أتلانتا",
+        "lat": 33.7576,
+        "lon": -84.401
+      },
+      "goals": []
+    },
+    {
+      "id": 94,
+      "stage": "sf",
+      "team1": {
+        "placeholder_en": "Winner Match 91",
+        "placeholder_ar": "فائز مباراة 91"
+      },
+      "team2": {
+        "placeholder_en": "Winner Match 92",
+        "placeholder_ar": "فائز مباراة 92"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-09T19:00:00Z",
+      "stadium": {
+        "name_en": "AT&T Stadium",
+        "name_ar": "ملعب إيه تي آند تي",
+        "city_en": "Dallas",
+        "city_ar": "دالاس",
+        "lat": 32.7473,
+        "lon": -97.0928
+      },
+      "goals": []
+    },
+    {
+      "id": 103,
+      "stage": "third",
+      "team1": {
+        "placeholder_en": "Loser Match 93",
+        "placeholder_ar": "خاسر مباراة 93"
+      },
+      "team2": {
+        "placeholder_en": "Loser Match 94",
+        "placeholder_ar": "خاسر مباراة 94"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-18T18:00:00Z",
+      "stadium": {
+        "name_en": "Hard Rock Stadium",
+        "name_ar": "ملعب هارد روك",
+        "city_en": "Miami",
+        "city_ar": "ميامي",
+        "lat": 25.958,
+        "lon": -80.2389
+      },
+      "goals": []
+    },
+    {
+      "id": 104,
+      "stage": "final",
+      "team1": {
+        "placeholder_en": "Winner Match 93",
+        "placeholder_ar": "فائز مباراة 93"
+      },
+      "team2": {
+        "placeholder_en": "Winner Match 94",
+        "placeholder_ar": "فائز مباراة 94"
+      },
+      "score1": 0,
+      "score2": 0,
+      "status": "scheduled",
+      "halftime_score": "",
+      "date": "2026-07-19T19:00:00Z",
+      "stadium": {
+        "name_en": "MetLife Stadium",
+        "name_ar": "ملعب ميتلايف",
+        "city_en": "New York/New Jersey",
+        "city_ar": "نيويورك/نيوجيرسي",
+        "lat": 40.8136,
+        "lon": -74.0744
+      },
+      "goals": []
+    }
+  ]
+}
